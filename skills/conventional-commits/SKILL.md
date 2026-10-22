@@ -1,6 +1,6 @@
 ---
 name: conventional-commits
-description: Use whenever creating a git commit, writing a commit message, or suggesting one. Enforces Conventional Commits format (feat, fix, style, chore, etc.) and forbids any Claude/AI attribution or Co-Authored-By trailers.
+description: Use whenever creating a git commit, writing a commit message, or suggesting one. Enforces Conventional Commits format (feat, fix, style, chore, etc.) with the description and body written in Spanish, and forbids any Claude/AI attribution or Co-Authored-By trailers.
 ---
 
 # Conventional Commits
@@ -19,6 +19,13 @@ Aplica estas reglas cada vez que crees un commit, redactes un mensaje de commit 
 
 - `scope` es opcional e indica la zona afectada: `feat(auth): ...`, `fix(api): ...`.
 - El cuerpo va separado del título por una línea en blanco. El diff ya muestra *qué* cambió; el cuerpo explica *por qué*.
+
+## Idioma
+
+- **Escribe la descripción, el cuerpo y el pie en español**, aunque el código, el repo o la conversación estén en inglés.
+- **El `type` va siempre en inglés** (`feat`, `fix`, `docs`...), igual que `BREAKING CHANGE`: son palabras clave de la especificación que usan las herramientas de changelog y versionado.
+- El `scope` y los identificadores de código (nombres de clases, funciones, archivos) se escriben tal como aparecen en el código.
+- Usa el imperativo en segunda persona: "agrega", "corrige", "elimina", "actualiza" — no "agregado", "agregando" ni "se agregó".
 
 ## Tipos permitidos
 
@@ -41,7 +48,7 @@ Aplica estas reglas cada vez que crees un commit, redactes un mensaje de commit 
 - Título de **máximo 72 caracteres**.
 - Todo en **minúsculas** (salvo nombres propios o identificadores de código).
 - **Sin punto final** en el título.
-- **Modo imperativo**: "add", "fix", "remove" — no "added", "fixes", "removing".
+- **Modo imperativo**: "agrega", "corrige", "elimina" — no "agregado", "corrigiendo", "se eliminó".
 - **Un commit = un cambio lógico.** Si los cambios mezclan varios propósitos (p. ej. un fix y un refactor), propón dividirlos en commits separados antes de commitear.
 - **Cambios que rompen compatibilidad**: añade `!` después del tipo/scope y un pie `BREAKING CHANGE: <explicación>`.
 
@@ -57,18 +64,18 @@ Aplica estas reglas cada vez que crees un commit, redactes un mensaje de commit 
 ✅ **Correcto**
 
 ```
-feat(cart): add discount code field to checkout
+feat(cart): agrega campo de código de descuento en el checkout
 ```
 
 ```
-fix(api): handle null customer id in order lookup
+fix(api): maneja customerId nulo al consultar pedidos
 
 El endpoint devolvía 500 cuando un pedido antiguo no tenía cliente
 asociado. Ahora responde 404, que es lo que espera el frontend.
 ```
 
 ```
-refactor(auth)!: replace session cookies with jwt
+refactor(auth)!: reemplaza cookies de sesión por jwt
 
 Las cookies de sesión impedían escalar horizontalmente sin sticky
 sessions.
@@ -80,9 +87,9 @@ en lugar de la cookie SESSIONID.
 ❌ **Incorrecto**
 
 ```
-Fixed the login bug.
+Se corrigió el bug del login.
 ```
-Sin tipo, en pasado, con mayúscula inicial y punto final.
+Sin tipo, sin imperativo, con mayúscula inicial y punto final.
 
 ```
 feat: add export to excel
@@ -90,4 +97,4 @@ feat: add export to excel
 Co-Authored-By: Claude <noreply@anthropic.com>
 🤖 Generated with Claude Code
 ```
-Incluye atribución a IA: elimina ambas líneas.
+Descripción en inglés e incluye atribución a IA. Correcto: `feat: agrega exportación a excel`, sin esas dos líneas.

@@ -1,6 +1,6 @@
 {
   "name": "git-conventions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skill que fuerza commits con Conventional Commits (feat, fix, style, chore...) y sin firma ni coautoría de IA",
   "author": {
     "name": "Brandon Alvarez Garcia"
