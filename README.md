@@ -7,6 +7,7 @@ Plugin de [Claude Code](https://code.claude.com/docs) que incluye la skill **`co
 Cada vez que Claude crea un commit, redacta un mensaje de commit o sugiere uno, la skill le indica que:
 
 - Use el formato [Conventional Commits](https://www.conventionalcommits.org/): `<type>(<scope>): <descripción>`, con tipos `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore` y `revert`.
+- Escriba la descripción y el cuerpo **en español** (el tipo sigue en inglés, porque es una palabra clave de la especificación): `feat(api): agrega endpoint de reportes`.
 - Respete reglas de estilo: título ≤ 72 caracteres, minúsculas, imperativo, sin punto final, un cambio lógico por commit y `!` + `BREAKING CHANGE:` para cambios incompatibles.
 - **No añada** `Co-Authored-By: Claude`, `Generated with Claude Code`, `Claude-Session:` ni ninguna otra mención a IA: el commit queda solo con tu autoría.
 
@@ -30,6 +31,49 @@ Dentro de Claude Code:
 claude plugin marketplace add BrandonAlvarez1220/conventional-commits
 claude plugin install git-conventions@git-conventions
 ```
+
+## Actualizaciones
+
+Claude Code guarda una copia del plugin en caché y solo descarga una nueva cuando cambia el campo `version` de `.claude-plugin/plugin.json`. Si se hace push sin subir la versión, nadie recibe el cambio.
+
+**Para quien lo mantiene:** en cada cambio de la skill, sube `version` (`1.1.0` → `1.2.0`) y haz push a `main`.
+
+**Para quien lo instaló:** la actualización automática viene desactivada en marketplaces de terceros. Hay dos formas de recibir la nueva versión:
+
+- **Automática (recomendado):** en Claude Code, `/plugin` → **Marketplaces** → `git-conventions` → **Enable auto-update**. Se actualiza solo en segundo plano.
+- **Manual:**
+  ```
+  /plugin marketplace update git-conventions
+  ```
+  o desde el shell:
+  ```bash
+  claude plugin marketplace update git-conventions
+  claude plugin update git-conventions@git-conventions
+  ```
+
+Después, reinicia Claude Code para que cargue la nueva versión.
+
+## Uso con OpenCode
+
+[OpenCode](https://opencode.ai) también lee skills en formato `SKILL.md`, pero no instala plugins de Claude Code, así que se instala solo la skill:
+
+**macOS / Linux**
+```bash
+mkdir -p ~/.config/opencode/skills/conventional-commits
+curl -fsSL https://raw.githubusercontent.com/BrandonAlvarez1220/conventional-commits/main/skills/conventional-commits/SKILL.md \
+  -o ~/.config/opencode/skills/conventional-commits/SKILL.md
+```
+
+**Windows (PowerShell)**
+```powershell
+$dir = "$HOME\.config\opencode\skills\conventional-commits"
+New-Item -ItemType Directory -Force -Path $dir | Out-Null
+Invoke-WebRequest https://raw.githubusercontent.com/BrandonAlvarez1220/conventional-commits/main/skills/conventional-commits/SKILL.md -OutFile "$dir\SKILL.md"
+```
+
+- Para un solo proyecto, usa `.opencode/skills/conventional-commits/SKILL.md` dentro del repo en lugar de la ruta global.
+- Para actualizar, vuelve a ejecutar el mismo comando (descarga la última versión de `main`).
+- OpenCode también busca en `~/.claude/skills/`. Si usas ambas herramientas, no copies la skill ahí además de instalar el plugin, o Claude Code la cargará dos veces.
 
 ## Cómo probarla
 
