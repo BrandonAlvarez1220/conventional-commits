@@ -1,0 +1,13 @@
+{
+  "name": "git-conventions",
+  "owner": {
+    "name": "Brandon Alvarez Garcia"
+  },
+  "description": "Marketplace con el plugin git-conventions: commits con Conventional Commits y sin atribución de IA",
+  "plugins": [
+    {
+      "name": "git-conventions",
+      "source": "./"
+    }
+  ]
+}
